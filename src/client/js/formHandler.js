@@ -12,19 +12,10 @@ const getApiKey = async () => {
   }
 };
 const getSentimentForText = async (baseUrl, apiKey, txt) => {
-  const settings = {
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    headers: {
-        "Content-Type": "application/json"
-    }
-  };
-  const res = await fetch(baseUrl + apiKey + '&of=json&txt='+ txt + '&model=Restaurants&lang=en', settings);
+  const res = await fetch(baseUrl + apiKey + '&of=json&txt='+ txt + '&model=Restaurants&lang=en');
     try { 
       const data = await res.json();
-      console.log(data);
+      //console.log(data);
       return data;
     }
     catch(e) {
@@ -36,24 +27,12 @@ const handleSubmit = function(e) {
    e.preventDefault();
    const txt = document.getElementById('txt').value;
    getApiKey().then(function(data) {
-    const sentiment = getSentimentForText(baseUrl, data.application_key, txt)
-    document.getElementById('results').textContent = sentiment;
+    getSentimentForText(baseUrl, data.application_key, txt).then(function(sentiment){
+      console.log(sentiment);
+      document.getElementById('irony').innerHTML = sentiment.irony;
+      document.getElementById('confidence').innerHTML = sentiment.confidence;
+    })
   })
 };
-
-// function handleSubmit(event) {
-//     event.preventDefault()
-
-//     // check what text was put into the form field
-//     let formText = document.getElementById('name').value
-//     checkForName(formText)
-
-//     console.log("::: Form Submitted :::")
-//     fetch('http://localhost:8080/test')
-//     .then(res => res.json())
-//     .then(function(res) {
-//         document.getElementById('results').innerHTML = res.message
-//     })
-// }
 
 export { handleSubmit }

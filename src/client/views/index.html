@@ -11,9 +11,6 @@
             <div class="">
                 <h1>Natural Language Processor</h1>
             </div>
-            <div class="">
-                navigation
-            </div>
         </header>
 
         <main>
@@ -25,14 +22,18 @@
             <section>
 
             <section>
-                <strong>Form Results:</strong>
-                <div id="results"></div>
+                <div id="">Irony:</div><div id="irony"></div>
+                <div id="">Confidence:</div><div id="confidence"></div>
             </section>
         </main>
-
-        <footer>
-            <p>This is a footer</p>
-        </footer>
-
+        <script>
+            // Check that service workers are supported
+            if ('serviceWorker' in navigator) {
+                // Use the window load event to keep the page load performant
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/service-worker.js');
+                });
+            }
+        </script>
     </body>
 </html>
