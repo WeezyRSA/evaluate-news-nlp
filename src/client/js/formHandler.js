@@ -3,10 +3,10 @@ const baseUrl = 'https://api.meaningcloud.com/sentiment-2.1?key=';
 
 const getApiKey = async () => {
   const request = await fetch('http://localhost:8081/key');
-  
+    
   try {
-    const apiKey = await request.json();
-    return apiKey;
+      const apiKey = await request.json();
+      return apiKey;
   }
   catch(e) {
     console.log('error: ' + e);
@@ -25,15 +25,20 @@ const getSentimentForText = async (baseUrl, apiKey, txt) => {
 };
 
 const handleSubmit = function(e) {
-   e.preventDefault();
-   const txt = document.getElementById('txt').value;
-   getApiKey().then(function(data) {
-    getSentimentForText(baseUrl, data.application_key, txt).then(function(sentiment){
-      console.log(sentiment);
-      document.getElementById('irony').innerHTML = sentiment.irony;
-      document.getElementById('confidence').innerHTML = sentiment.confidence;
+  e.preventDefault();
+  const txt = document.getElementById('txt').value;
+  if (txt == ""){
+    alert("Please comment on the food.");
+  }
+  else{
+    getApiKey().then(function(data) {
+      getSentimentForText(baseUrl, data.application_key, txt).then(function(sentiment){
+        console.log(sentiment);
+        document.getElementById('irony').innerHTML = sentiment.irony;
+        document.getElementById('confidence').innerHTML = sentiment.confidence;
+      })
     })
-  })
+  } 
 };
 
 export { handleSubmit,  getApiKey}
