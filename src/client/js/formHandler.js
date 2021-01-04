@@ -1,3 +1,4 @@
+const fetch = require("node-fetch");
 const baseUrl = 'https://api.meaningcloud.com/sentiment-2.1?key=';
 
 const getApiKey = async () => {
@@ -35,4 +36,4 @@ const handleSubmit = function(e) {
   })
 };
 
-export { handleSubmit }
+export { handleSubmit,  getApiKey}
