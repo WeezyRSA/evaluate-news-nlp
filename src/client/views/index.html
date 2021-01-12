@@ -22,8 +22,12 @@
             <section>
 
             <section>
-                <div id="">Irony:</div><div id="irony"></div>
                 <div id="">Confidence:</div><div id="confidence"></div>
+                <div id="">Agreement:</div><div id="agreement"></div>
+                <div id="">Irony:</div><div id="irony"></div>
+                <div id="">Subjectivity:</div><div id="subjectivity"></div>
+                <div id="">Scoretag:</div><div id="score_tag"></div>
+                
             </section>
         </main>
         <script>
@@ -31,7 +35,7 @@
             if ('serviceWorker' in navigator) {
                 // Use the window load event to keep the page load performant
                 window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('/service-worker.js');
+                    navigator.serviceWorker.register('./service-worker.js');
                 });
             }
         </script>

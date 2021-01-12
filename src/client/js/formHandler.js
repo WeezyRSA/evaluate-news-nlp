@@ -34,8 +34,12 @@ const handleSubmit = function(e) {
     getApiKey().then(function(data) {
       getSentimentForText(baseUrl, data.application_key, txt).then(function(sentiment){
         console.log(sentiment);
-        document.getElementById('irony').innerHTML = sentiment.irony;
         document.getElementById('confidence').innerHTML = sentiment.confidence;
+        document.getElementById('agreement').innerHTML = sentiment.agreement;
+        document.getElementById('irony').innerHTML = sentiment.irony;
+        document.getElementById('subjectivity').innerHTML = sentiment.subjectivity;
+        document.getElementById('score_tag').innerHTML = sentiment.score_tag;
+        
       })
     })
   } 
