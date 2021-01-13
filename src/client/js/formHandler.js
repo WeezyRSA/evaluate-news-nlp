@@ -12,7 +12,6 @@ const postArticle = async (url = "", data = {}) => {
   });
   try {
       const resData = await response.json();
-      //console.log('resData:', resData)
       return resData;
   } catch (error) {
       console.log('error', error);

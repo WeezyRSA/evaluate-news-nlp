@@ -32,7 +32,8 @@ app.listen(8081, function () {
 // POST 
 app.post('/meanapi', async function(req, res) {
     srcUrl = req.body.url;
-    const apiURL = `${baseURL}key=${apiKey.application_key}&of=json&url=${srcUrl}&model=Analysis&lang=en`
+    const apiURL = `${baseURL}key=${apiKey.application_key}&txt=${srcUrl}&lang=en`
+    //const apiURL = `${baseURL}key=${apiKey.application_key}&of=json&url=${srcUrl}&model=Analysis&lang=en`
     console.log(`Source Url: ${apiURL}`);
     const response = await fetch(apiURL)
     const data = await response.json()
