@@ -1,48 +1,42 @@
 const fetch = require("node-fetch");
-const baseUrl = 'https://api.meaningcloud.com/sentiment-2.1?key=';
 
-const getApiKey = async () => {
-  const request = await fetch('http://localhost:8081/key');
-    
+const postArticle = async (url = "", data = {}) => {
+  const response = await fetch(url, {
+      method: 'POST',
+      credentials: 'same-origin',
+      mode: 'cors',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+  });
   try {
-      const apiKey = await request.json();
-      return apiKey;
+      const resData = await response.json();
+      //console.log('resData:', resData)
+      return resData;
+  } catch (error) {
+      console.log('error', error);
   }
-  catch(e) {
-    console.log('error: ' + e);
-  }
-};
-const getSentimentForText = async (baseUrl, apiKey, txt) => {
-  const res = await fetch(baseUrl + apiKey + '&of=json&txt='+ txt + '&model=Restaurants&lang=en');
-    try { 
-      const data = await res.json();
-      //console.log(data);
-      return data;
-    }
-    catch(e) {
-      console.log('error: ' + e);
-    }
 };
 
 const handleSubmit = function(e) {
   e.preventDefault();
-  const txt = document.getElementById('txt').value;
-  if (txt == ""){
-    alert("Please comment on the food.");
+  const url = document.getElementById('url').value;
+  if (url == ""){
+    alert("Please enter a url.");
   }
   else{
-    getApiKey().then(function(data) {
-      getSentimentForText(baseUrl, data.application_key, txt).then(function(sentiment){
-        console.log(sentiment);
-        document.getElementById('confidence').innerHTML = sentiment.confidence;
-        document.getElementById('agreement').innerHTML = sentiment.agreement;
-        document.getElementById('irony').innerHTML = sentiment.irony;
-        document.getElementById('subjectivity').innerHTML = sentiment.subjectivity;
-        document.getElementById('score_tag').innerHTML = sentiment.score_tag;
+    postArticle('http://localhost:8081/meanapi', {url: url}).then(function(data) {
+        console.log(data);
+        document.getElementById('confidence').innerHTML = data.confidence;
+        document.getElementById('agreement').innerHTML = data.agreement;
+        document.getElementById('irony').innerHTML = data.irony;
+        document.getElementById('subjectivity').innerHTML = data.subjectivity;
+        document.getElementById('score_tag').innerHTML = data.score_tag;
         
-      })
-    })
+      }
+    )
   } 
 };
 
-export { handleSubmit,  getApiKey}
+export { handleSubmit, postArticle}
